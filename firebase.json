@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "project": "ptprojectsweb",
+    "site": "pt-places",
     "public": "build",
     "ignore": [
       "firebase.json",
