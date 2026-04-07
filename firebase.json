@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "project": "ptprojectsweb",
     "public": "build",
     "ignore": [
       "firebase.json",
