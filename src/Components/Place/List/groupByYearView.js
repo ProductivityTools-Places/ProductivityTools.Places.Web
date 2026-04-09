@@ -4,6 +4,7 @@ import Thumbnail from './thumbnail.js'
 function GroupByYearView({ placeList }) {
 
     const [placesByYear, setPlacesByYear] = useState([]);
+    const [collapsedYears, setCollapsedYears] = useState({});
 
     useEffect(() => {
 
@@ -48,6 +49,13 @@ function GroupByYearView({ placeList }) {
         getYears();
     }, [placeList])
 
+    const toggleCollapse = (year) => {
+        setCollapsedYears(prevState => ({
+            ...prevState,
+            [year]: !prevState[year]
+        }));
+    }
+
     const getThumbnail = (visit) => {
         if (visit.visitThumbnail) {
             return visit.visitThumbnail;
@@ -74,29 +82,27 @@ function GroupByYearView({ placeList }) {
         <div>Group by year:
             {
                 Object.keys(placesByYear).sort(function ( a, b ) { return b - a; }).map((key, index) => (
-                    <div>
-                        <div>key: {key}</div>
-                        <div>{placesByYear[key].map(place => {
-                            return (
-                                <div>
-                                    {/* <div>PlaceId: {place.id} PlaceName: {place.Name}</div> */}
-                                    <div>
-                                        {place.Visits.map(visit => {
-                                            //console.log("VV")
-                                            //console.log(visit);
-
-                                            return (
-                                                <div>
-                                                    {/* <div>{visit.Date}</div>
-                                                    <div>{visit.Photos && visit.Photos.length > 0 ? visit.Photos[0] : "fda"}</div> */}
-                                                    <Thumbnail place={place} thumbnail={getThumbnail(visit)} />
-                                                </div>
-                                            )
-                                        })}
+                    <div key={key}>
+                        <div onClick={() => toggleCollapse(key)} style={{ cursor: 'pointer', fontWeight: 'bold', margin: '10px 0' }}>
+                            Year: {key} {collapsedYears[key] ? '[+]' : '[-]'}
+                        </div>
+                        {!collapsedYears[key] && (
+                            <div>{placesByYear[key].map(place => {
+                                return (
+                                    <div key={place.id}>
+                                        <div>
+                                            {place.Visits.map((visit, idx) => {
+                                                return (
+                                                    <div key={idx}>
+                                                        <Thumbnail place={place} thumbnail={getThumbnail(visit)} />
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}</div>
+                                )
+                            })}</div>
+                        )}
                         <div className='newLine'></div>
                     </div>
                 ))
