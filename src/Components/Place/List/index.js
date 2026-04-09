@@ -33,7 +33,7 @@ function PlaceList() {
         console.log('logout')
         console.log(ctx);
         logout();
-
+        navigate("/Login");
     }
     console.log("DDDDDDDDDDDDDDDDD");
     console.log(ctx?.data?.user);

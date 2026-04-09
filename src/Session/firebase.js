@@ -9,14 +9,14 @@ import {
     signOut,
 } from "firebase/auth";
 
-const devfirebaseConfig = {
-    apiKey: "AIzaSyBJUQlokv0c-P4-FSei_k7VWuOV0GLgXcg",
-    authDomain: "ptplacesdev.firebaseapp.com",
-    projectId: "ptplacesdev",
-    storageBucket: "ptplacesdev.appspot.com",
-    messagingSenderId: "664443768445",
-    appId: "1:664443768445:web:8df4bae69a6a6f77802b14"
-};
+// const devfirebaseConfig = {
+//     apiKey: "AIzaSyBJUQlokv0c-P4-FSei_k7VWuOV0GLgXcg",
+//     authDomain: "ptplacesdev.firebaseapp.com",
+//     projectId: "ptplacesdev",
+//     storageBucket: "ptplacesdev.appspot.com",
+//     messagingSenderId: "664443768445",
+//     appId: "1:664443768445:web:8df4bae69a6a6f77802b14"
+// };
 
 const prodfirebaseConfig = {
     apiKey: "AIzaSyBxY4oT4SZd5r-nZiM1eFFnUCcC3UxgYr4",
@@ -27,7 +27,7 @@ const prodfirebaseConfig = {
     appId: "1:93484780890:web:b541cd5e0469ce549ff763"
 };
 
-const configName = process.env.NODE_ENV === 'development' ? devfirebaseConfig : prodfirebaseConfig;
+const configName = process.env.NODE_ENV === 'development' ? prodfirebaseConfig : prodfirebaseConfig;
 //const configName = prodfirebaseConfig;
 
 const app = initializeApp(configName);
