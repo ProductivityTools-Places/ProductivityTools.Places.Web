@@ -35,11 +35,19 @@ const auth = getAuth(app)
 
 
 const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope('https://www.googleapis.com/auth/photoslibrary.readonly');
+
 const signInWithGoogle = async () => {
     try {
         const res = await signInWithPopup(auth, googleProvider);
         console.log(res);
         localStorage.setItem("token", res.user.accessToken);
+
+        const credential = GoogleAuthProvider.credentialFromResult(res);
+        if (credential) {
+            localStorage.setItem("googleAccessToken", credential.accessToken);
+            console.log("Google access token saved");
+        }
 
         console.log("token validation");
         let token = localStorage.getItem('token');

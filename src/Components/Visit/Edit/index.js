@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from 'react-router-dom'
 import service from '../../../services/api.js'
 import { v4 as uuidv4 } from 'uuid'
+import { config } from '../../../config.js'
 
 
 function VisitEdit({ updateVisit, placeId, visit }) {
@@ -9,6 +10,18 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     const { pathname } = useLocation();
     const [mode, setMode] = useState('new')
     const [files, setFiles] = useState();
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = "https://apis.google.com/js/api.js";
+        script.onload = () => {
+            window.gapi.load('picker', { 'callback': () => console.log('Picker loaded') });
+        };
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        }
+    }, []);
 
     useEffect(() => {
         if (pathname == '/VisitNew') {
@@ -60,6 +73,34 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         updateVisit(vistEdit);
     }
 
+    const openPicker = () => {
+        const token = localStorage.getItem('googleAccessToken');
+        if (!token) {
+            alert("Please log in again to grant Google Photos access.");
+            return;
+        }
+        const picker = new window.google.picker.PickerBuilder()
+            .addView(window.google.picker.ViewId.DOCS)
+            .setOAuthToken(token)
+            .setDeveloperKey(config.GOOGLE_API_KEY)
+            .setAppId('93484780890')
+            .setCallback(pickerCallback)
+            .build();
+        picker.setVisible(true);
+    }
+
+    const pickerCallback = (data) => {
+        if (data.action == window.google.picker.Action.PICKED) {
+            const doc = data.docs[0];
+            console.log("Picked file:", doc);
+            const photoUrl = doc.url;
+            
+            let photos = vistEdit?.Photos || []
+            photos.push(photoUrl);
+            setVisitEdit({ ...vistEdit, Photos: photos });
+        }
+    }
+
     return (
         <div>VisitEditpm
             <div>Mode: {mode}</div>
@@ -69,6 +110,9 @@ function VisitEdit({ updateVisit, placeId, visit }) {
             <input type="file" multiple accept="image/png, image/jpg" onChange={onFileChange} />
             <button onClick={onFileUpload}>
                 Upload!
+            </button>
+            <button onClick={openPicker} style={{ marginLeft: '10px' }}>
+                Choose from Google Photos
             </button>
             {console.log(files)}
             <span>file: {files && files?.map(x => { return (<span>{x.name}</span>) })}</span>
