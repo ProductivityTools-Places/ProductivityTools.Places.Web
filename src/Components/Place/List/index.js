@@ -14,6 +14,7 @@ function PlaceList() {
 
     const [placeList, setPlaceList] = useState([]);
     const [grouping, setGrouping] = useState();
+    const [selectedCity, setSelectedCity] = useState('');
 
     useEffect(() => {
         const call = async () => {
@@ -35,9 +36,11 @@ function PlaceList() {
         logout();
         navigate("/Login");
     }
-    console.log("DDDDDDDDDDDDDDDDD");
     console.log(ctx?.data?.user);
     console.log(ctx?.data);
+
+    const cities = [...new Set(placeList.map(place => place.City).filter(Boolean))];
+    const filteredPlaceList = selectedCity ? placeList.filter(place => place.City === selectedCity) : placeList;
 
   
     const groupByYear=()=>
@@ -58,7 +61,17 @@ function PlaceList() {
             <button onClick={()=> setGrouping('groupByYear')} >Group by year</button>
             <button onClick={()=> setGrouping('groupByYear2')} >Group by year3</button>
             <br></br>
-            <Grid placeList={placeList} grouping={grouping}></Grid>
+            <div>
+                <label htmlFor="cityFilter">Filter by City: </label>
+                <select id="cityFilter" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
+                    <option value="">All Cities</option>
+                    {cities.map(city => (
+                        <option key={city} value={city}>{city}</option>
+                    ))}
+                </select>
+            </div>
+            <br></br>
+            <Grid placeList={filteredPlaceList} grouping={grouping}></Grid>
         </div>
     )
 
