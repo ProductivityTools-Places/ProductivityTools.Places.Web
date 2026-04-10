@@ -8,7 +8,6 @@ import { AuthProvider } from './Session/AuthContext'
 
 
 import VisitEdit from './Components/Visit/Edit';
-import PhotoPickerPage from './Components/PhotoPicker';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -28,7 +27,6 @@ function App() {
             <Route path='/Date' element={<Date />} />
             <Route path='/New' element={<PlaceNew />} />
             <Route path='/Item/:id' element={<PlaceItem />} />
-            <Route path='/PhotoPicker' element={<PhotoPickerPage />} />
             {/* <Route path='/VisitNew' element={<VisitEdit />} />
           <Route path='/VisitEdit' element={<VisitEdit />} /> */}
           </Routes>

@@ -54,7 +54,7 @@ function PlaceList() {
             <span>Token expired :{ctx.data?.tokenExpired ? "yes" : "no"} </span>
             <span>user:{ctx.data?.user?.email}</span>
 
-            <h1>Place List</h1><Link to='New'>New</Link> | <Link to='/PhotoPicker'>Photo Picker</Link>
+            <h1>Place List</h1><Link to='New'>New</Link>
             <br></br>
             <span>Group by: year, area</span>
             <button onClick={()=>setGrouping('default')}>No grouping</button>
