@@ -84,21 +84,23 @@ function VisitEdit({ updateVisit, placeId, visit }) {
             <span>file: {files && files?.map(x => { return (<span>{x.name}</span>) })}</span>
             <span>{vistEdit && vistEdit.Comment}</span>
             <br />
+            <Button variant="contained" color="success" onClick={add} style={{ marginTop: '10px' }}>
+                Add or update visit
+            </Button>
+            <br />
             <span>Photos:
                 {vistEdit && vistEdit.Photos && vistEdit.Photos.map(x => {
                     return (<span>
-                        <span>{x}</span>
-                        obrazek
+                        <span>Url: {x}</span><br></br>
+
                         <div className="crop">
                             <img src={x} />
                         </div>
                     </span>)
                 })}
             </span><br />
-            <Button variant="contained" color="success" onClick={add} style={{ marginTop: '10px' }}>
-                Add or update visit
-            </Button>
         </div >
+
 
     )
 }

@@ -15,6 +15,7 @@ function PlaceList() {
     const [placeList, setPlaceList] = useState([]);
     const [grouping, setGrouping] = useState();
     const [selectedCity, setSelectedCity] = useState('');
+    const [selectedPlaceName, setSelectedPlaceName] = useState('');
 
     useEffect(() => {
         const call = async () => {
@@ -39,8 +40,16 @@ function PlaceList() {
     console.log(ctx?.data?.user);
     console.log(ctx?.data);
 
-    const cities = [...new Set(placeList.map(place => place.City).filter(Boolean))];
-    const filteredPlaceList = selectedCity ? placeList.filter(place => place.City === selectedCity) : placeList;
+    const cities = [...new Set(placeList.map(place => place.City).filter(Boolean))].sort();
+    
+    const availablePlaces = selectedCity ? placeList.filter(place => place.City === selectedCity) : placeList;
+    const placeNames = [...new Set(availablePlaces.map(place => place.Name).filter(Boolean))].sort();
+    
+    const filteredPlaceList = placeList.filter(place => {
+        const matchesCity = selectedCity ? place.City === selectedCity : true;
+        const matchesName = selectedPlaceName ? place.Name === selectedPlaceName : true;
+        return matchesCity && matchesName;
+    }).sort((a, b) => a.Name.localeCompare(b.Name));
 
   
     const groupByYear=()=>
@@ -63,10 +72,19 @@ function PlaceList() {
             <br></br>
             <div>
                 <label htmlFor="cityFilter">Filter by City: </label>
-                <select id="cityFilter" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
+                <select id="cityFilter" value={selectedCity} onChange={(e) => { setSelectedCity(e.target.value); setSelectedPlaceName(''); }}>
                     <option value="">All Cities</option>
                     {cities.map(city => (
                         <option key={city} value={city}>{city}</option>
+                    ))}
+                </select>
+            </div>
+            <div>
+                <label htmlFor="nameFilter">Filter by Name: </label>
+                <select id="nameFilter" value={selectedPlaceName} onChange={(e) => setSelectedPlaceName(e.target.value)}>
+                    <option value="">All Places</option>
+                    {placeNames.map(name => (
+                        <option key={name} value={name}>{name}</option>
                     ))}
                 </select>
             </div>
