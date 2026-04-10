@@ -36,6 +36,7 @@ const auth = getAuth(app)
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('https://www.googleapis.com/auth/photoslibrary.readonly');
+googleProvider.addScope('https://www.googleapis.com/auth/photoslibrary');
 
 const signInWithGoogle = async () => {
     try {
