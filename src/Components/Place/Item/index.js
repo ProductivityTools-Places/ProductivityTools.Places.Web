@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import service from '../../../services/api.js'
 import VisitEdit from '../../Visit/Edit/index.js';
 import VisitItem from '../../Visit/Item'
 
 function PlaceItem() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [place, setPlace] = useState();
     const [updatePlace, setUpdatePlace] = useState(false)
@@ -77,6 +78,7 @@ function PlaceItem() {
 
     const savePlace = async () => {
         let result = await service.updatePlace(place)
+        navigate('/');
         return result;
     }
 

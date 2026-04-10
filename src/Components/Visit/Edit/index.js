@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom'
 import service from '../../../services/api.js'
 import { v4 as uuidv4 } from 'uuid'
 import { config } from '../../../config.js'
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
 function VisitEdit({ updateVisit, placeId, visit }) {
@@ -10,18 +12,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     const { pathname } = useLocation();
     const [mode, setMode] = useState('new')
     const [files, setFiles] = useState();
-
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = "https://apis.google.com/js/api.js";
-        script.onload = () => {
-            window.gapi.load('picker', { 'callback': () => console.log('Picker loaded') });
-        };
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        }
-    }, []);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         if (pathname == '/VisitNew') {
@@ -49,20 +40,22 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     };
 
     const onFileUpload = async () => {
-        let photos = vistEdit?.Photos || []
-        for (const file of files)
-        {
-            var r = await service.uploadPhoto(file, placeId);
-            photos.push(r);
-            console.log("onFileUpload");
-            console.log(r);
+        if (!files || files.length === 0) return;
+        setUploading(true);
+        try {
+            let photos = vistEdit?.Photos || []
+            for (const file of files)
+            {
+                var r = await service.uploadPhoto(file, placeId);
+                photos.push(r);
+            }
+            setVisitEdit({ ...vistEdit, Photos: photos });
+        } catch (error) {
+            console.error("Upload failed", error);
+            alert("Failed to upload photos.");
+        } finally {
+            setUploading(false);
         }
-
-        console.log("photos");
-        console.log(photos);
-
-        setVisitEdit({ ...vistEdit, Photos: photos });
-
     };
 
     const add = () => {
@@ -78,13 +71,14 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     return (
         <div>VisitEditpm
             <div>Mode: {mode}</div>
-            <div>Date:<input type="text" value={vistEdit?.Date} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Date: e.target.value }))}></input></div>
-            <div>Commment: <input type="text" value={vistEdit?.Comment} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))}></input></div>
+            <TextField label="Date" fullWidth variant="outlined" value={vistEdit?.Date} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Date: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
+            <TextField label="Comment" fullWidth variant="outlined" value={vistEdit?.Comment} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
             Photos:
-            <input type="file" multiple onChange={onFileChange} />
-            <button onClick={onFileUpload}>
-                Upload!
-            </button>
+            <input type="file" multiple onChange={onFileChange} style={{ marginBottom: '10px' }} />
+            <Button variant="contained" color="primary" onClick={onFileUpload} disabled={uploading} style={{ marginBottom: '10px' }}>
+                {uploading ? 'Uploading...' : 'Upload!'}
+            </Button>
+            {uploading && <span style={{ marginLeft: '10px' }}>⏳ Uploading...</span>}
 
             {console.log(files)}
             <span>file: {files && files?.map(x => { return (<span>{x.name}</span>) })}</span>
@@ -101,7 +95,9 @@ function VisitEdit({ updateVisit, placeId, visit }) {
                     </span>)
                 })}
             </span><br />
-            <button onClick={add}>Add or update visit</button>
+            <Button variant="contained" color="success" onClick={add} style={{ marginTop: '10px' }}>
+                Add or update visit
+            </Button>
         </div >
 
     )

@@ -10,7 +10,7 @@ function Thumbnail({ place, thumbnail }) {
             <div className='thumbnail crop'>
                 <img src={thumbnail ?? defaultThumbnail}></img>
             </div><br />
-            <Link to={"Item\\" + place.id}>{place.Name}</Link>[{place.City}] ({place.Visits?.length || 0})
+            <Link to={"Item\\" + place.id}>{place.Name}</Link> - {place.City}, Ilość wizyt: {place.Visits?.length || 0}, Ostatnia: {place.Visits?.sort((a, b) => new Date(b.Date) - new Date(a.Date))[0]?.Date}
         </div>)
 }
 
