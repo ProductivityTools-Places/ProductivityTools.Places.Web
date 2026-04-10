@@ -81,7 +81,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
             <div>Date:<input type="text" value={vistEdit?.Date} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Date: e.target.value }))}></input></div>
             <div>Commment: <input type="text" value={vistEdit?.Comment} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))}></input></div>
             Photos:
-            <input type="file" multiple accept="image/png, image/jpg" onChange={onFileChange} />
+            <input type="file" multiple onChange={onFileChange} />
             <button onClick={onFileUpload}>
                 Upload!
             </button>
