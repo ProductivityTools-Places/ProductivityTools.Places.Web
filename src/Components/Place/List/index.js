@@ -70,7 +70,7 @@ function PlaceList() {
     return (
         <div>XX
             <button onClick={logoutClick}>Log out</button>
-            <button onClick={handleMigrateImages}>Migrate Images</button>
+            {/* <button onClick={handleMigrateImages}>Migrate Images</button> */}
             <span>Token expired :{ctx.data?.tokenExpired ? "yes" : "no"} </span>
             <span>user:{ctx.data?.user?.email}</span>
 

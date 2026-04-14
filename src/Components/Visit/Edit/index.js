@@ -13,6 +13,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     const [mode, setMode] = useState('new')
     const [files, setFiles] = useState();
     const [uploading, setUploading] = useState(false);
+    const [photosBaseUrl, setPhotosBaseUrl] = useState('');
 
     useEffect(() => {
         if (pathname == '/VisitNew') {
@@ -27,6 +28,18 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         console.log("UseEffect set visit")
         console.log(visit);
     }, [visit])
+
+    useEffect(() => {
+        const fetchBaseUrl = async () => {
+            try {
+                const url = await service.getPhotosBaseUrl();
+                setPhotosBaseUrl(url);
+            } catch (error) {
+                console.error("Failed to fetch photos base URL", error);
+            }
+        };
+        fetchBaseUrl();
+    }, []);
 
 
     const onFileChange = event => {
@@ -47,7 +60,10 @@ function VisitEdit({ updateVisit, placeId, visit }) {
             for (const file of files)
             {
                 var r = await service.uploadPhoto(file, placeId);
-                photos.push(r);
+                console.log("uploaded photo")
+                console.log(r);
+                const fileNameOnly = typeof r === 'string' ? r.split('/').pop() : r;
+                photos.unshift(fileNameOnly);
             }
             setVisitEdit({ ...vistEdit, Photos: photos });
         } catch (error) {
@@ -88,17 +104,17 @@ function VisitEdit({ updateVisit, placeId, visit }) {
                 Add or update visit
             </Button>
             <br />
-            <span>Photos:
+            <div>Photos:
                 {vistEdit && vistEdit.Photos && vistEdit.Photos.map(x => {
-                    return (<span>
-                        <span>Url: {x}</span><br></br>
-
-                        <div className="crop">
-                            <img src={x} />
+                    return (<div>
+                        <span>Url: {typeof x === 'string' && x.startsWith('http') ? x : `${photosBaseUrl}${x}`}</span><br></br>
+                        <br />
+                        <div className="crop" style={{ float: 'none' }}>
+                            <img src={typeof x === 'string' && x.startsWith('http') ? x : `${photosBaseUrl}${x}`} />
                         </div>
-                    </span>)
+                    </div>)
                 })}
-            </span><br />
+            </div>
         </div >
 
 
