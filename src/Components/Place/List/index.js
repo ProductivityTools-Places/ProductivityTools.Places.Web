@@ -37,6 +37,16 @@ function PlaceList() {
         logout();
         navigate("/Login");
     }
+
+    const handleMigrateImages = async () => {
+        try {
+            await service.migrateImages();
+            alert('Migration invoked successfully');
+        } catch (error) {
+            console.error('Migration failed', error);
+            alert('Migration failed');
+        }
+    }
     console.log(ctx?.data?.user);
     console.log(ctx?.data);
 
@@ -60,6 +70,7 @@ function PlaceList() {
     return (
         <div>XX
             <button onClick={logoutClick}>Log out</button>
+            <button onClick={handleMigrateImages}>Migrate Images</button>
             <span>Token expired :{ctx.data?.tokenExpired ? "yes" : "no"} </span>
             <span>user:{ctx.data?.user?.email}</span>
 

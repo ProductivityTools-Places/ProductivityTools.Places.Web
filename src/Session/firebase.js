@@ -9,14 +9,15 @@ import {
     signOut,
 } from "firebase/auth";
 
-// const devfirebaseConfig = {
-//     apiKey: "AIzaSyBJUQlokv0c-P4-FSei_k7VWuOV0GLgXcg",
-//     authDomain: "ptplacesdev.firebaseapp.com",
-//     projectId: "ptplacesdev",
-//     storageBucket: "ptplacesdev.appspot.com",
-//     messagingSenderId: "664443768445",
-//     appId: "1:664443768445:web:8df4bae69a6a6f77802b14"
-// };
+const devfirebaseConfig = {
+    apiKey: "AIzaSyAi2YG0yEOJ00sLKM63Vbxfpdk_SqL7UvI",
+    authDomain: "ptprojectsdev.firebaseapp.com",
+    projectId: "ptprojectsdev",
+    storageBucket: "ptprojectsdev.firebasestorage.app",
+    messagingSenderId: "785198365463",
+    appId: "1:785198365463:web:eb4dca317d62308e219552",
+    measurementId: "G-L0X130L2DE"
+};
 
 const prodfirebaseConfig = {
     apiKey: "AIzaSyBxY4oT4SZd5r-nZiM1eFFnUCcC3UxgYr4",
@@ -27,7 +28,7 @@ const prodfirebaseConfig = {
     appId: "1:93484780890:web:b541cd5e0469ce549ff763"
 };
 
-const configName = process.env.NODE_ENV === 'development' ? prodfirebaseConfig : prodfirebaseConfig;
+const configName = process.env.NODE_ENV === 'development' ? devfirebaseConfig : prodfirebaseConfig;
 //const configName = prodfirebaseConfig;
 
 const app = initializeApp(configName);
@@ -62,8 +63,10 @@ const signInWithGoogle = async () => {
 
 const logout = () => {
     signOut(auth);
-    localStorage.removeItem("token")
-    console.log('token removed')
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("googleAccessToken");
+    console.log('All tokens removed');
 };
 
 const getToken = () => {

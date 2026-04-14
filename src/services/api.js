@@ -81,6 +81,14 @@ async function uploadPhoto(photo, placeId) {
     return response.data;
 }
 
+async function migrateImages() {
+    console.log("migrateImages");
+    let call = async (header) => {
+        const response = await axios.post(`${config.PATH_BASE}/migrate-images`, {}, header);
+        return response.data;
+    }
+    return invokeCall(call);
+}
 
 const service = {
     getDate,
@@ -88,7 +96,8 @@ const service = {
     getPlaceList,
     newPlace,
     updatePlace,
-    uploadPhoto
+    uploadPhoto,
+    migrateImages
 }
 
 export default service
