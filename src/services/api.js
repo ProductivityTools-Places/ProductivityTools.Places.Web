@@ -95,6 +95,12 @@ async function migrateImages() {
     return invokeCall(call);
 }
 
+async function deletePhoto(photo, placeId) {
+    console.log("deletePhoto", photo);
+    const response = await axios.delete(`${config.PATH_BASE}/photos/${photo}`);
+    return response.data;
+}
+
 const service = {
     getDate,
     getPlace,
@@ -103,7 +109,8 @@ const service = {
     updatePlace,
     uploadPhoto,
     migrateImages,
-    getPhotosBaseUrl
+    getPhotosBaseUrl,
+    deletePhoto
 }
 
 export default service

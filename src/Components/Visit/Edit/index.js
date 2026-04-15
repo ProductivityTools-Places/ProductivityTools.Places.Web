@@ -14,6 +14,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
     const [files, setFiles] = useState();
     const [uploading, setUploading] = useState(false);
     const [photosBaseUrl, setPhotosBaseUrl] = useState('');
+    const [photosToRemove, setPhotosToRemove] = useState([]);
 
     useEffect(() => {
         if (pathname == '/VisitNew') {
@@ -74,12 +75,21 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         }
     };
 
+    const removePhoto = (photo) => {
+        setVisitEdit(prevState => ({ ...prevState, Photos: prevState.Photos.filter(x => x !== photo) }));
+        setPhotosToRemove(prevState => [...prevState, photo]);
+    }
+
     const add = () => {
         if (vistEdit.uuid == undefined) {
             vistEdit.uuid = uuidv4();
         }
         console.log(vistEdit);
         updateVisit(vistEdit);
+        photosToRemove.forEach(photo => {
+            service.deletePhoto(photo, placeId);
+        });
+        setPhotosToRemove([]);
     }
 
 
@@ -108,7 +118,10 @@ function VisitEdit({ updateVisit, placeId, visit }) {
                 {vistEdit && vistEdit.Photos && vistEdit.Photos.map(x => {
                     return (<div>
                         <span>Url: {typeof x === 'string' && x.startsWith('http') ? x : `${photosBaseUrl}${x}`}</span><br></br>
-                        <br />
+                        <br /><Button variant="contained" color="primary" onClick={() => removePhoto(x)} style={{ marginBottom: '10px' }}>
+                            Remove
+                        </Button>
+
                         <div className="crop" style={{ float: 'none' }}>
                             <img src={typeof x === 'string' && x.startsWith('http') ? x : `${photosBaseUrl}${x}`} />
                         </div>
