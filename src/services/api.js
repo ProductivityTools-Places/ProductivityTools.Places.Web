@@ -95,10 +95,14 @@ async function migrateImages() {
     return invokeCall(call);
 }
 
-async function deletePhoto(photo, placeId) {
-    console.log("deletePhoto", photo);
-    const response = await axios.delete(`${config.PATH_BASE}/photos/${photo}`);
-    return response.data;
+async function deletePhoto(photo) {
+    let call = async (header) => {
+        const filename = typeof photo === 'string' ? photo.split('/').pop() : photo;
+        console.log("deletePhoto", filename);
+        const response = await axios.delete(`${config.PATH_BASE}/photos/${filename}`, header);
+        return response.data;
+    }
+    return invokeCall(call);
 }
 
 const service = {

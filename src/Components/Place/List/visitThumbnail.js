@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { AppContext } from '../../../AppContext';
 
 function VisitThumbnail({ visit }) {
+    const { photosBaseUrl } = useContext(AppContext);
 
     // console.log("thumbnail")
     // console.log(place);
     const defaultThumbnail = "/thumbnail/thumbnail.png";
+
     const getThumbnail = () => {
-        if (visit==undefined) {
+        if (visit == undefined) {
             return defaultThumbnail;
         }
         else {
@@ -14,7 +18,7 @@ function VisitThumbnail({ visit }) {
                 return visit.visitThumbnail;
             }
             else {
-                if (visit.Photos.length > 0) {
+                if (visit.Photos && visit.Photos.length > 0) {
                     return visit.Photos[0];
                 }
                 else {
@@ -23,10 +27,14 @@ function VisitThumbnail({ visit }) {
             }
         }
     }
+
+    const thumbnail = getThumbnail();
+    const src = thumbnail === defaultThumbnail ? defaultThumbnail : (typeof thumbnail === 'string' && thumbnail.startsWith('http') ? thumbnail : `${photosBaseUrl}${thumbnail}`);
+
     return (
         <div className='thumbnailContainer' >
             <div className='thumbnail crop'>
-                <img src={getThumbnail()}></img>
+                <img src={src}></img>
             </div><br />
             <Link to={"Item\\" + visit.Place.id}>{visit.Place.Name} {visit.Date}</Link>
         </div>)

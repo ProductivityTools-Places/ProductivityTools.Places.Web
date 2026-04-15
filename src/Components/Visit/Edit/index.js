@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useLocation } from 'react-router-dom'
 import service from '../../../services/api.js'
 import { v4 as uuidv4 } from 'uuid'
 import { config } from '../../../config.js'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { AppContext } from '../../../AppContext';
 
 
 function VisitEdit({ updateVisit, placeId, visit }) {
+    const { photosBaseUrl } = useContext(AppContext);
     const [vistEdit, setVisitEdit] = useState({ Comment: 'x', Photos: [] });
     const { pathname } = useLocation();
     const [mode, setMode] = useState('new')
     const [files, setFiles] = useState();
     const [uploading, setUploading] = useState(false);
-    const [photosBaseUrl, setPhotosBaseUrl] = useState('');
     const [photosToRemove, setPhotosToRemove] = useState([]);
 
     useEffect(() => {
@@ -29,18 +30,6 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         console.log("UseEffect set visit")
         console.log(visit);
     }, [visit])
-
-    useEffect(() => {
-        const fetchBaseUrl = async () => {
-            try {
-                const url = await service.getPhotosBaseUrl();
-                setPhotosBaseUrl(url);
-            } catch (error) {
-                console.error("Failed to fetch photos base URL", error);
-            }
-        };
-        fetchBaseUrl();
-    }, []);
 
 
     const onFileChange = event => {
@@ -87,7 +76,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         console.log(vistEdit);
         updateVisit(vistEdit);
         photosToRemove.forEach(photo => {
-            service.deletePhoto(photo, placeId);
+            service.deletePhoto(photo);
         });
         setPhotosToRemove([]);
     }

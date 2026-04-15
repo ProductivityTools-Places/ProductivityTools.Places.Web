@@ -5,6 +5,7 @@ import PlaceNew from './Components/Place/New';
 import PlaceItem from './Components/Place/Item';
 import Login from './Session/login'
 import { AuthProvider } from './Session/AuthContext'
+import { AppProvider } from './AppContext'
 
 
 import VisitEdit from './Components/Visit/Edit';
@@ -19,18 +20,20 @@ function App() {
 
     <div className="App">
       <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path='/Login' element={<Login />} />
-            <Route path='/' element={<PlaceList />} />
-            <Route path='/List' element={<PlaceList />} />
-            <Route path='/Date' element={<Date />} />
-            <Route path='/New' element={<PlaceNew />} />
-            <Route path='/Item/:id' element={<PlaceItem />} />
-            {/* <Route path='/VisitNew' element={<VisitEdit />} />
-          <Route path='/VisitEdit' element={<VisitEdit />} /> */}
-          </Routes>
-        </AuthProvider>
+        <AppProvider>
+          <AuthProvider>
+            <Routes>
+              <Route path='/Login' element={<Login />} />
+              <Route path='/' element={<PlaceList />} />
+              <Route path='/List' element={<PlaceList />} />
+              <Route path='/Date' element={<Date />} />
+              <Route path='/New' element={<PlaceNew />} />
+              <Route path='/Item/:id' element={<PlaceItem />} />
+              {/* <Route path='/VisitNew' element={<VisitEdit />} />
+            <Route path='/VisitEdit' element={<VisitEdit />} /> */}
+            </Routes>
+          </AuthProvider>
+        </AppProvider>
       </Router>
       <Date />
     </div>
