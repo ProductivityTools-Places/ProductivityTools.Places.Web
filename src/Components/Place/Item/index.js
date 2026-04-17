@@ -3,6 +3,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import service from '../../../services/api.js'
 import VisitEdit from '../../Visit/Edit/index.js';
 import VisitItem from '../../Visit/Item'
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button'
 
 function PlaceItem() {
     const { id } = useParams();
@@ -111,7 +113,7 @@ function PlaceItem() {
                     })}
 
                     <div className="newLine">
-                        <button onClick={newVisit}>New visit</button>
+                        <Button variant="contained" color="primary" onClick={newVisit}>New visit</Button>
                     </div>
                 </>
             )
@@ -121,24 +123,30 @@ function PlaceItem() {
     const renderPlace = () => {
         if (mode == 'editPlace') {
             return (
-                <>
-                    <h2>Name: <input type="text" value={place?.Name} onChange={(e) => setPlace(prevState => ({ ...prevState, Name: e.target.value }))}></input></h2>
-                    <p>Description: {place && place.Description}</p>
-                    <input type="text" value={place?.Description} onChange={(e) => setPlace(prevState => ({ ...prevState, Description: e.target.value }))}></input>
-                    <p>City</p>
-                    <input type="text" value={place?.City} onChange={(e) => setPlace(prevState => ({ ...prevState, City: e.target.value }))}></input>
+                <div className="editPlace">
+                    <TextField label="Name" fullWidth variant="outlined" value={place?.Name} onChange={(e) => setPlace(prevState => ({ ...prevState, Name: e.target.value }))} margin="normal" />
+                    <TextField label="Description" fullWidth variant="outlined" value={place?.Description} multiline minRows={3} onChange={(e) => setPlace(prevState => ({ ...prevState, Description: e.target.value }))} margin="normal" />
+                    <TextField label="City" fullWidth variant="outlined" value={place?.City} onChange={(e) => setPlace(prevState => ({ ...prevState, City: e.target.value }))} margin="normal" />
 
-                    <button onClick={savePlace}>save</button>
-                    <button onClick={deletePlace}>delete</button><br />
-
-                </>
+                    <div style={{ marginTop: '10px', marginBottom: '20px' }}>
+                        <Button variant="contained" color="primary" onClick={savePlace} style={{ marginRight: '10px' }}>
+                            Save
+                        </Button>
+                        <Button variant="outlined" color="secondary" onClick={() => setMode(null)} style={{ marginRight: '10px' }}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" color="error" onClick={deletePlace}>
+                            Delete place
+                        </Button>
+                    </div>
+                </div>
             )
         } else {
             return (
                 <>
                     <h2>{place && place.Name}<button className='editLink' onClick={editPlace}></button> </h2>
                     <p className="description">Description: {place && place.Description}</p>
-                     <p className="description">City: {place && place.City}</p>
+                    <p className="description">City: {place && place.City}</p>
                 </>
             )
         }
