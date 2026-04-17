@@ -82,6 +82,13 @@ function PlaceItem() {
         return result;
     }
 
+    const deletePlace = async () => {
+        if (window.confirm("Are you sure you want to delete this place?")) {
+            await service.deletePlace(id);
+            navigate('/');
+        }
+    }
+
     const renderVisits = () => {
         if (mode == 'newVisit') {
             return (
@@ -121,7 +128,8 @@ function PlaceItem() {
                     <p>City</p>
                     <input type="text" value={place?.City} onChange={(e) => setPlace(prevState => ({ ...prevState, City: e.target.value }))}></input>
 
-                    <button onClick={savePlace}>save</button><br />
+                    <button onClick={savePlace}>save</button>
+                    <button onClick={deletePlace}>delete</button><br />
 
                 </>
             )
