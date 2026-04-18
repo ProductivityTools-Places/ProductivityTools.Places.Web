@@ -47,8 +47,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         setUploading(true);
         try {
             let photos = vistEdit?.Photos || []
-            for (const file of files)
-            {
+            for (const file of files) {
                 var r = await service.uploadPhoto(file, placeId);
                 console.log("uploaded photo")
                 console.log(r);
@@ -108,7 +107,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
                     return (<div>
                         <span>Url: {typeof x === 'string' && x.startsWith('http') ? x : `${photosBaseUrl}${x}`}</span><br></br>
                         <br /><Button variant="contained" color="primary" onClick={() => removePhoto(x)} style={{ marginBottom: '10px' }}>
-                            Remove
+                            Remove photo
                         </Button>
 
                         <div className="crop" style={{ float: 'none' }}>

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import Photo from './photo.js'
 import service from '../../../services/api.js';
 import { AppContext } from '../../../AppContext';
+import Button from '@mui/material/Button'
 
 function VisitItem({ item, editVisit, setPlaceThumbnail, updateVisit }) {
     const { photosBaseUrl } = useContext(AppContext);
@@ -17,7 +18,11 @@ function VisitItem({ item, editVisit, setPlaceThumbnail, updateVisit }) {
 
     return (
         <div className="visit" >
-            <b>{item && item.Date} </b><span>{item && item.Comment}</span><button className='editLink' onClick={edit}></button><br /><br />
+            <b>{item && item.Date} </b><span>{item && item.Comment}</span>
+            <Button variant="outlined" size="small" onClick={edit} style={{ marginLeft: '10px' }}>
+                Edit
+            </Button>
+            <br /><br />
             {item && item.Photos && item.Photos.map(x => {
                 console.log("Photo");
                 console.log(x);

@@ -112,9 +112,6 @@ function PlaceItem() {
                         return (<VisitItem editVisit={editVisit} updateVisit={updateVisit} setPlaceThumbnail={setPlaceThumbnail} item={x}></VisitItem>)
                     })}
 
-                    <div className="newLine">
-                        <Button variant="contained" color="primary" onClick={newVisit}>New visit</Button>
-                    </div>
                 </>
             )
         }
@@ -144,7 +141,15 @@ function PlaceItem() {
         } else {
             return (
                 <>
-                    <h2>{place && place.Name}<button className='editLink' onClick={editPlace}></button> </h2>
+                    <h2>
+                        {place && place.Name}
+                        <Button variant="outlined" size="small" onClick={editPlace} style={{ marginLeft: '10px' }}>
+                            Edit
+                        </Button>
+                        <Button variant="contained" color="primary" size="small" onClick={newVisit} style={{ marginLeft: '10px' }}>
+                            New visit
+                        </Button>
+                    </h2>
                     <p className="description">Description: {place && place.Description}</p>
                     <p className="description">City: {place && place.City}</p>
                 </>
