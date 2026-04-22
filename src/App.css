@@ -1,7 +1,7 @@
 .crop {
-    float: left;
-    width: 600px;
-    height: 400px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
 }
 
@@ -12,26 +12,12 @@
     object-position: center;
 }
 
-.thumbnail .crop {
-    float: left;
-    width: 600px;
-    height: 400px;
-    overflow: hidden;
-}
-
-.thumbnail .crop img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+/* Removed redundant .thumbnail .crop styles as they are covered by .crop */
 
 .thumbnailContainer {
-
-    width: 600px;
-    float: left;
-    align-items: center;
-    align-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
 }
 
 .newLine {
