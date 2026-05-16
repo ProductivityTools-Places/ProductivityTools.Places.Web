@@ -5,6 +5,7 @@ import VisitEdit from '../../Visit/Edit/index.js';
 import VisitItem from '../../Visit/Item'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
+import MenuItem from '@mui/material/MenuItem';
 
 function PlaceItem() {
     const { id } = useParams();
@@ -124,6 +125,18 @@ function PlaceItem() {
                     <TextField label="Name" fullWidth variant="outlined" value={place?.Name} onChange={(e) => setPlace(prevState => ({ ...prevState, Name: e.target.value }))} margin="normal" />
                     <TextField label="Description" fullWidth variant="outlined" value={place?.Description} multiline minRows={3} onChange={(e) => setPlace(prevState => ({ ...prevState, Description: e.target.value }))} margin="normal" />
                     <TextField label="City" fullWidth variant="outlined" value={place?.City} onChange={(e) => setPlace(prevState => ({ ...prevState, City: e.target.value }))} margin="normal" />
+                    <TextField
+                        select
+                        label="Type"
+                        fullWidth
+                        variant="outlined"
+                        value={place?.Type || ''}
+                        onChange={(e) => setPlace(prevState => ({ ...prevState, Type: e.target.value }))}
+                        margin="normal"
+                    >
+                        <MenuItem value="Company">Company</MenuItem>
+                        <MenuItem value="Family">Family</MenuItem>
+                    </TextField>
 
                     <div style={{ marginTop: '10px', marginBottom: '20px' }}>
                         <Button variant="contained" color="primary" onClick={savePlace} style={{ marginRight: '10px' }}>
@@ -152,6 +165,7 @@ function PlaceItem() {
                     </h2>
                     <p className="description">Description: {place && place.Description}</p>
                     <p className="description">City: {place && place.City}</p>
+                    <p className="description">Type: {place && place.Type}</p>
                 </>
             )
         }

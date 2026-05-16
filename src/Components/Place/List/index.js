@@ -16,6 +16,7 @@ function PlaceList() {
     const [grouping, setGrouping] = useState();
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedPlaceName, setSelectedPlaceName] = useState('');
+    const [selectedType, setSelectedType] = useState('');
 
     useEffect(() => {
         const call = async () => {
@@ -51,6 +52,7 @@ function PlaceList() {
     console.log(ctx?.data);
 
     const cities = [...new Set(placeList.map(place => place.City).filter(Boolean))].sort();
+    const types = [...new Set(placeList.map(place => place.Type).filter(Boolean))].sort();
     
     const availablePlaces = selectedCity ? placeList.filter(place => place.City === selectedCity) : placeList;
     const placeNames = [...new Set(availablePlaces.map(place => place.Name).filter(Boolean))].sort();
@@ -58,7 +60,8 @@ function PlaceList() {
     const filteredPlaceList = placeList.filter(place => {
         const matchesCity = selectedCity ? place.City === selectedCity : true;
         const matchesName = selectedPlaceName ? place.Name === selectedPlaceName : true;
-        return matchesCity && matchesName;
+        const matchesType = selectedType ? place.Type === selectedType : true;
+        return matchesCity && matchesName && matchesType;
     }).sort((a, b) => a.Name.localeCompare(b.Name));
 
   
@@ -96,6 +99,15 @@ function PlaceList() {
                     <option value="">All Places</option>
                     {placeNames.map(name => (
                         <option key={name} value={name}>{name}</option>
+                    ))}
+                </select>
+            </div>
+            <div>
+                <label htmlFor="typeFilter">Filter by Type: </label>
+                <select id="typeFilter" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                    <option value="">All Types</option>
+                    {types.map(type => (
+                        <option key={type} value={type}>{type}</option>
                     ))}
                 </select>
             </div>
