@@ -30,13 +30,16 @@ function VisitThumbnail({ visit }) {
 
     const thumbnail = getThumbnail();
     const src = thumbnail === defaultThumbnail ? defaultThumbnail : (typeof thumbnail === 'string' && thumbnail.startsWith('http') ? thumbnail : `${photosBaseUrl}${thumbnail}`);
+    const visitType = visit?.Type || visit?.Place?.Type;
 
     return (
         <div className='thumbnailContainer' >
             <div className='thumbnail crop'>
                 <img src={src}></img>
-                {visit?.Place?.Type && (
-                    <div className="typeOverlay">{visit.Place.Type}</div>
+                {visitType && (
+                    <div className="overlayContainer">
+                        <div className="typeOverlay">{visitType}</div>
+                    </div>
                 )}
             </div><br />
             <Link to={"Item\\" + visit.Place.id}>{visit.Place.Name} {visit.Date}</Link>

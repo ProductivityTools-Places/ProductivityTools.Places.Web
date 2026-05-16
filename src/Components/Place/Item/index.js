@@ -150,18 +150,21 @@ function PlaceItem() {
                     <TextField label="Name" fullWidth variant="outlined" value={place?.Name} onChange={(e) => setPlace(prevState => ({ ...prevState, Name: e.target.value }))} margin="normal" />
                     <TextField label="Description" fullWidth variant="outlined" value={place?.Description} multiline minRows={3} onChange={(e) => setPlace(prevState => ({ ...prevState, Description: e.target.value }))} margin="normal" />
                     <TextField label="City" fullWidth variant="outlined" value={place?.City} onChange={(e) => setPlace(prevState => ({ ...prevState, City: e.target.value }))} margin="normal" />
-                    <TextField
-                        select
-                        label="Type"
-                        fullWidth
-                        variant="outlined"
-                        value={place?.Type || ''}
-                        onChange={(e) => setPlace(prevState => ({ ...prevState, Type: e.target.value }))}
-                        margin="normal"
-                    >
-                        <MenuItem value="Company">Company</MenuItem>
-                        <MenuItem value="Family">Family</MenuItem>
-                    </TextField>
+                    {place?.Type && (
+                        <TextField
+                            select
+                            label="Type"
+                            fullWidth
+                            variant="outlined"
+                            value={place?.Type || ''}
+                            onChange={(e) => setPlace(prevState => ({ ...prevState, Type: e.target.value }))}
+                            margin="normal"
+                        >
+                            <MenuItem value="Company">Company</MenuItem>
+                            <MenuItem value="Family">Family</MenuItem>
+                            <MenuItem value=""><em>None (Remove Type)</em></MenuItem>
+                        </TextField>
+                    )}
                     <div style={{ marginTop: '15px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.6)' }}>Rating:</span>
                         <Rating
@@ -214,7 +217,7 @@ function PlaceItem() {
                     </h2>
                     <p className="description">Description: {place && place.Description}</p>
                     <p className="description">City: {place && place.City}</p>
-                    <p className="description">Type: {place && place.Type}</p>
+                    {place?.Type && <p className="description">Type: {place.Type}</p>}
                     <p className="description" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         Rating: <Rating value={place?.Rating || 0} readOnly size="small" />
                     </p>
