@@ -6,6 +6,7 @@ import VisitItem from '../../Visit/Item'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem';
+import Rating from '@mui/material/Rating';
 
 function PlaceItem() {
     const { id } = useParams();
@@ -137,6 +138,35 @@ function PlaceItem() {
                         <MenuItem value="Company">Company</MenuItem>
                         <MenuItem value="Family">Family</MenuItem>
                     </TextField>
+                    <div style={{ marginTop: '15px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.6)' }}>Rating:</span>
+                        <Rating
+                            name="rating"
+                            value={place?.Rating || 0}
+                            onChange={(event, newValue) => {
+                                setPlace(prevState => ({ ...prevState, Rating: newValue }));
+                            }}
+                        />
+                    </div>
+                    <TextField
+                        select
+                        label="Price"
+                        fullWidth
+                        variant="outlined"
+                        value={place?.Price || ''}
+                        onChange={(e) => setPlace(prevState => ({ ...prevState, Price: e.target.value }))}
+                        margin="normal"
+                    >
+                        <MenuItem value="<50">&lt;50</MenuItem>
+                        <MenuItem value="50<price<100">50&lt;price&lt;100</MenuItem>
+                        <MenuItem value="100<price<150">100&lt;price&lt;150</MenuItem>
+                        <MenuItem value="150<price<200">150&lt;price&lt;200</MenuItem>
+                        <MenuItem value="200<price<250">200&lt;price&lt;250</MenuItem>
+                        <MenuItem value="250<price<300">250&lt;price&lt;300</MenuItem>
+                        <MenuItem value="300<price<350">300&lt;price&lt;350</MenuItem>
+                        <MenuItem value="350<price<400">350&lt;price&lt;400</MenuItem>
+                        <MenuItem value="400<price">400&lt;price</MenuItem>
+                    </TextField>
 
                     <div style={{ marginTop: '10px', marginBottom: '20px' }}>
                         <Button variant="contained" color="primary" onClick={savePlace} style={{ marginRight: '10px' }}>
@@ -166,6 +196,10 @@ function PlaceItem() {
                     <p className="description">Description: {place && place.Description}</p>
                     <p className="description">City: {place && place.City}</p>
                     <p className="description">Type: {place && place.Type}</p>
+                    <p className="description" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        Rating: <Rating value={place?.Rating || 0} readOnly size="small" />
+                    </p>
+                    <p className="description">Price: {place && place.Price}</p>
                 </>
             )
         }

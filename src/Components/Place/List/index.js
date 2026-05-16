@@ -17,6 +17,8 @@ function PlaceList() {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedPlaceName, setSelectedPlaceName] = useState('');
     const [selectedType, setSelectedType] = useState('');
+    const [selectedRating, setSelectedRating] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState('');
 
     useEffect(() => {
         const call = async () => {
@@ -61,7 +63,9 @@ function PlaceList() {
         const matchesCity = selectedCity ? place.City === selectedCity : true;
         const matchesName = selectedPlaceName ? place.Name === selectedPlaceName : true;
         const matchesType = selectedType ? place.Type === selectedType : true;
-        return matchesCity && matchesName && matchesType;
+        const matchesRating = selectedRating ? place.Rating == selectedRating : true;
+        const matchesPrice = selectedPrice ? place.Price === selectedPrice : true;
+        return matchesCity && matchesName && matchesType && matchesRating && matchesPrice;
     }).sort((a, b) => a.Name.localeCompare(b.Name));
 
   
@@ -109,6 +113,32 @@ function PlaceList() {
                     {types.map(type => (
                         <option key={type} value={type}>{type}</option>
                     ))}
+                </select>
+            </div>
+            <div>
+                <label htmlFor="ratingFilter">Filter by Rating: </label>
+                <select id="ratingFilter" value={selectedRating} onChange={(e) => setSelectedRating(e.target.value)}>
+                    <option value="">All Ratings</option>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                </select>
+            </div>
+            <div>
+                <label htmlFor="priceFilter">Filter by Price: </label>
+                <select id="priceFilter" value={selectedPrice} onChange={(e) => setSelectedPrice(e.target.value)}>
+                    <option value="">All Prices</option>
+                    <option value="<50">&lt;50</option>
+                    <option value="50<price<100">50&lt;price&lt;100</option>
+                    <option value="100<price<150">100&lt;price&lt;150</option>
+                    <option value="150<price<200">150&lt;price&lt;200</option>
+                    <option value="200<price<250">200&lt;price&lt;250</option>
+                    <option value="250<price<300">250&lt;price&lt;300</option>
+                    <option value="300<price<350">300&lt;price&lt;350</option>
+                    <option value="350<price<400">350&lt;price&lt;400</option>
+                    <option value="400<price">400&lt;price</option>
                 </select>
             </div>
             <br></br>

@@ -4,6 +4,7 @@ import service from '../../../services/api.js'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem';
+import Rating from '@mui/material/Rating';
 
 function PlaceNew() {
     const [placeEdit, setPlaceEdit] = useState();
@@ -37,6 +38,35 @@ function PlaceNew() {
             >
                 <MenuItem value="Company">Company</MenuItem>
                 <MenuItem value="Family">Family</MenuItem>
+            </TextField><br />
+            <div style={{ marginTop: '15px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.6)' }}>Rating:</span>
+                <Rating
+                    name="rating"
+                    value={placeEdit?.Rating || 0}
+                    onChange={(event, newValue) => {
+                        setPlaceEdit({ ...placeEdit, Rating: newValue });
+                    }}
+                />
+            </div>
+            <TextField
+                select
+                label="Price"
+                fullWidth
+                variant="outlined"
+                value={placeEdit?.Price || ''}
+                onChange={(e) => setPlaceEdit({ ...placeEdit, Price: e.target.value })}
+                margin="normal"
+            >
+                <MenuItem value="<50">&lt;50</MenuItem>
+                <MenuItem value="50<price<100">50&lt;price&lt;100</MenuItem>
+                <MenuItem value="100<price<150">100&lt;price&lt;150</MenuItem>
+                <MenuItem value="150<price<200">150&lt;price&lt;200</MenuItem>
+                <MenuItem value="200<price<250">200&lt;price&lt;250</MenuItem>
+                <MenuItem value="250<price<300">250&lt;price&lt;300</MenuItem>
+                <MenuItem value="300<price<350">300&lt;price&lt;350</MenuItem>
+                <MenuItem value="350<price<400">350&lt;price&lt;400</MenuItem>
+                <MenuItem value="400<price">400&lt;price</MenuItem>
             </TextField><br />
 
             {/* <span><span>name</span><input type="text" onChange={(e) => setPlaceEdit({ ...placeEdit, Name: e.target.value })}></input></span>
