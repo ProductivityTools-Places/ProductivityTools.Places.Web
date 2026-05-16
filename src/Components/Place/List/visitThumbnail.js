@@ -35,6 +35,9 @@ function VisitThumbnail({ visit }) {
         <div className='thumbnailContainer' >
             <div className='thumbnail crop'>
                 <img src={src}></img>
+                {visit?.Place?.Type && (
+                    <div className="typeOverlay">{visit.Place.Type}</div>
+                )}
             </div><br />
             <Link to={"Item\\" + visit.Place.id}>{visit.Place.Name} {visit.Date}</Link>
         </div>)
