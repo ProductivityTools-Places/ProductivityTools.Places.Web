@@ -6,6 +6,30 @@ import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem';
 import Rating from '@mui/material/Rating';
 
+const formatPrice = (priceVal) => {
+    if (!priceVal) return '';
+    const p = Number(priceVal);
+    if (!isNaN(p)) {
+        if (p <= 100) return "<100";
+        if (p <= 200) return "100<price<200";
+        if (p <= 300) return "200<price<300";
+        return "300<price";
+    }
+    if (priceVal === '<50' || priceVal === '50<price<100' || priceVal === '<100') return "<100";
+    if (priceVal === '100<price<150' || priceVal === '150<price<200' || priceVal === '100<price<200') return "100<price<200";
+    if (priceVal === '200<price<250' || priceVal === '250<price<300' || priceVal === '200<price<300') return "200<price<300";
+    if (priceVal === '300<price<350' || priceVal === '350<price<400' || priceVal === '400<price' || priceVal === '300<price') return "300<price";
+    return priceVal;
+};
+
+const getPriceMax = (rangeStr) => {
+    if (rangeStr === '<100') return '100';
+    if (rangeStr === '100<price<200') return '200';
+    if (rangeStr === '200<price<300') return '300';
+    if (rangeStr === '300<price') return '1000';
+    return rangeStr;
+};
+
 function PlaceNew() {
     const [placeEdit, setPlaceEdit] = useState();
     const [mode, setMode] = useState('new')
@@ -54,19 +78,14 @@ function PlaceNew() {
                 label="Price"
                 fullWidth
                 variant="outlined"
-                value={placeEdit?.Price || ''}
-                onChange={(e) => setPlaceEdit({ ...placeEdit, Price: e.target.value })}
+                value={formatPrice(placeEdit?.Price) || ''}
+                onChange={(e) => setPlaceEdit({ ...placeEdit, Price: getPriceMax(e.target.value) })}
                 margin="normal"
             >
-                <MenuItem value="<50">&lt;50</MenuItem>
-                <MenuItem value="50<price<100">50&lt;price&lt;100</MenuItem>
-                <MenuItem value="100<price<150">100&lt;price&lt;150</MenuItem>
-                <MenuItem value="150<price<200">150&lt;price&lt;200</MenuItem>
-                <MenuItem value="200<price<250">200&lt;price&lt;250</MenuItem>
-                <MenuItem value="250<price<300">250&lt;price&lt;300</MenuItem>
-                <MenuItem value="300<price<350">300&lt;price&lt;350</MenuItem>
-                <MenuItem value="350<price<400">350&lt;price&lt;400</MenuItem>
-                <MenuItem value="400<price">400&lt;price</MenuItem>
+                <MenuItem value="<100">&lt;100</MenuItem>
+                <MenuItem value="100<price<200">100&lt;price&lt;200</MenuItem>
+                <MenuItem value="200<price<300">200&lt;price&lt;300</MenuItem>
+                <MenuItem value="300<price">300&lt;price</MenuItem>
             </TextField><br />
 
             {/* <span><span>name</span><input type="text" onChange={(e) => setPlaceEdit({ ...placeEdit, Name: e.target.value })}></input></span>
