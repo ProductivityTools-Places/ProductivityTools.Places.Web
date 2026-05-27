@@ -28,8 +28,8 @@ const prodfirebaseConfig = {
     appId: "1:93484780890:web:b541cd5e0469ce549ff763"
 };
 
-const configName = process.env.NODE_ENV === 'development' ? devfirebaseConfig : prodfirebaseConfig;
-//const configName = prodfirebaseConfig;
+//const configName = process.env.NODE_ENV === 'development' ? devfirebaseConfig : prodfirebaseConfig;
+const configName = prodfirebaseConfig;
 
 const app = initializeApp(configName);
 const auth = getAuth(app)
