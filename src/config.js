@@ -8,5 +8,5 @@ const prd = {
     GOOGLE_API_KEY: 'AIzaSyBxY4oT4SZd5r-nZiM1eFFnUCcC3UxgYr4'
 }
 
-//export const config=prd;
-export const config = process.env.NODE_ENV === 'development' ? dev : prd;
+export const config=prd;
+//export const config = process.env.NODE_ENV === 'development' ? dev : prd;
