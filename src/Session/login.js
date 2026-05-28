@@ -16,7 +16,7 @@ export default function Login() {
         <div className="login">
             <div className="login__container">
                 <button className="login__btn login__google" onClick={signIn}>
-                    Login with Google
+                    Login with Google1
                 </button>
             </div>
         </div>
