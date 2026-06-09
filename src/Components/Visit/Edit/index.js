@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { config } from '../../../config.js'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 import { AppContext } from '../../../AppContext';
 
 
@@ -87,6 +88,18 @@ function VisitEdit({ updateVisit, placeId, visit }) {
             <div>Mode: {mode}</div>
             <TextField label="Date" fullWidth variant="outlined" value={vistEdit?.Date} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Date: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
             <TextField label="Comment" fullWidth variant="outlined" value={vistEdit?.Comment} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
+            <TextField
+                select
+                label="Type"
+                fullWidth
+                variant="outlined"
+                value={vistEdit?.Type || ''}
+                onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Type: e.target.value }))}
+                style={{ marginBottom: '10px' }}
+            >
+                <MenuItem value="Company">Company</MenuItem>
+                <MenuItem value="Family">Family</MenuItem>
+            </TextField><br />
             Photos:
             <input type="file" multiple onChange={onFileChange} style={{ marginBottom: '10px' }} />
             <Button variant="contained" color="primary" onClick={onFileUpload} disabled={uploading} style={{ marginBottom: '10px' }}>

@@ -51,18 +51,20 @@ function PlaceNew() {
             <TextField label="Name" fullWidth variant="outlined" value={placeEdit?.Name} onChange={(e) => setPlaceEdit({ ...placeEdit, Name: e.target.value })} /><br />
             <TextField label="Description" fullWidth variant="outlined" value={placeEdit?.Description} multiline minRows={3} onChange={(e) => setPlaceEdit({ ...placeEdit, Description: e.target.value })} /><br />
             <TextField label="City" fullWidth variant="outlined" value={placeEdit?.City} onChange={(e) => setPlaceEdit({ ...placeEdit, City: e.target.value })} /><br />
-            <TextField
-                select
-                label="Type"
-                fullWidth
-                variant="outlined"
-                value={placeEdit?.Type || ''}
-                onChange={(e) => setPlaceEdit({ ...placeEdit, Type: e.target.value })}
-                margin="normal"
-            >
-                <MenuItem value="Company">Company</MenuItem>
-                <MenuItem value="Family">Family</MenuItem>
-            </TextField><br />
+            {placeEdit?.Type && (
+                <TextField
+                    select
+                    label="Type"
+                    fullWidth
+                    variant="outlined"
+                    value={placeEdit?.Type || ''}
+                    onChange={(e) => setPlaceEdit({ ...placeEdit, Type: e.target.value })}
+                    margin="normal"
+                >
+                    <MenuItem value="Company">Company</MenuItem>
+                    <MenuItem value="Family">Family</MenuItem>
+                </TextField>
+            )}<br />
             <div style={{ marginTop: '15px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.6)' }}>Rating:</span>
                 <Rating
