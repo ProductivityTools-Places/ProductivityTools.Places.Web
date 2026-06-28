@@ -90,14 +90,14 @@ function PlaceList() {
     console.log(ctx?.data);
 
     const cities = [...new Set(placeList.map(place => place.City).filter(Boolean))].sort();
-    const types = [...new Set(placeList.map(place => place.Type).filter(Boolean))].sort();
+    const types = [...new Set(placeList.flatMap(place => place.Visits?.map(v => v.Type) || []).filter(Boolean))].sort();
     
     const filteredPlaceList = placeList.filter(place => {
         const matchesCity = selectedCity ? place.City === selectedCity : true;
         const matchesName = selectedPlaceName ? place.Name.toLowerCase().includes(selectedPlaceName.toLowerCase()) : true;
-        const matchesType = selectedTypes.length === 0 ? true : selectedTypes.includes(place.Type);
-        const matchesRating = selectedRatings.length === 0 ? true : selectedRatings.includes(String(place.Rating));
-        const matchesPrice = selectedPrices.length === 0 ? true : selectedPrices.includes(formatPrice(place.Price));
+        const matchesType = selectedTypes.length === 0 ? true : (place.Visits?.some(visit => selectedTypes.includes(visit.Type)) ?? false);
+        const matchesRating = selectedRatings.length === 0 ? true : (place.Visits?.some(visit => selectedRatings.includes(String(visit.Rating))) ?? false);
+        const matchesPrice = selectedPrices.length === 0 ? true : (place.Visits?.some(visit => selectedPrices.includes(formatPrice(visit.Price))) ?? false);
         return matchesCity && matchesName && matchesType && matchesRating && matchesPrice;
     }).sort((a, b) => a.Name.localeCompare(b.Name));
 

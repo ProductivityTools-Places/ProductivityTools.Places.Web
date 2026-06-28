@@ -13,3 +13,10 @@ Links
 ## Debug
 NODE_ENV=development npm run start
 $env:NODE_ENV="production"; npm run start
+
+
+## Deploy
+
+npm run build
+npx firebase login
+npx fireabse deploy
