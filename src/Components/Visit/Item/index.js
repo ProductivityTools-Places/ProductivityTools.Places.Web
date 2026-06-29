@@ -20,7 +20,7 @@ function VisitItem({ item, editVisit, setPlaceThumbnail, updateVisit }) {
         <div className="visit" >
             <b>{item && item.Date} </b>
             {item?.Type && <span style={{ marginRight: '10px', fontWeight: 'bold', color: 'gray' }}>[{item.Type}]</span>}
-            <span>{item && item.Comment}</span>
+            <p className="description">{item && item.Comment}</p>
             <Button variant="outlined" size="small" onClick={edit} style={{ marginLeft: '10px' }}>
                 Edit
             </Button>

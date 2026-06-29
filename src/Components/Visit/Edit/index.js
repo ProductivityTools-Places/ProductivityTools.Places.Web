@@ -87,7 +87,7 @@ function VisitEdit({ updateVisit, placeId, visit }) {
         <div>VisitEditpm
             <div>Mode: {mode}</div>
             <TextField label="Date" fullWidth variant="outlined" value={vistEdit?.Date} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Date: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
-            <TextField label="Comment" fullWidth variant="outlined" value={vistEdit?.Comment} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
+            <TextField label="Comment" fullWidth variant="outlined" value={vistEdit?.Comment} multiline  minRows={3} onChange={(e) => setVisitEdit(prevState => ({ ...prevState, Comment: e.target.value }))} style={{ marginBottom: '10px' }} /><br />
             <TextField
                 select
                 label="Type"
