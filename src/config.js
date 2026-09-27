@@ -4,7 +4,7 @@ const dev = {
 }
 //this should be taken from firebase
 const prd = {
-    PATH_BASE: 'https://places-api-dot-ptprojectsweb.ew.r.appspot.com',
+    PATH_BASE: 'https://pt-places-api-93484780890.europe-west1.run.app',
     GOOGLE_API_KEY: 'AIzaSyBxY4oT4SZd5r-nZiM1eFFnUCcC3UxgYr4'
 }
 
