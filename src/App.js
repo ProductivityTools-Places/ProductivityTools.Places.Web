@@ -4,6 +4,7 @@ import PlaceList from './Components/Place/List'
 import PlaceNew from './Components/Place/New';
 import PlaceItem from './Components/Place/Item';
 import Login from './Session/login'
+import Navbar from './Components/Navbar'
 import { AuthProvider } from './Session/AuthContext'
 import { AppProvider } from './AppContext'
 
@@ -22,6 +23,7 @@ function App() {
       <Router>
         <AppProvider>
           <AuthProvider>
+            <Navbar />
             <Routes>
               <Route path='/Login' element={<Login />} />
               <Route path='/' element={<PlaceList />} />

@@ -110,12 +110,8 @@ function PlaceList() {
     }
 
     return (
-        <div>XX
-            <button onClick={logoutClick}>Log out</button>
+        <div>
             {/* <button onClick={handleMigrateImages}>Migrate Images</button> */}
-            <span>Token expired :{ctx.data?.tokenExpired ? "yes" : "no"} </span>
-            <span>user:{ctx.data?.user?.email}</span>
-
             <h1>Place List</h1><Link to='New'>New</Link>
             <br></br>
             <span>Group by: year, area</span>
