@@ -24,7 +24,7 @@ export default function Login() {
             <div className="login__container">
                 <div className="login__logo-wrapper">
                     <img
-                        src={`${process.env.PUBLIC_URL}/Places_512.png`}
+                        src={`${process.env.PUBLIC_URL}/icons/icon-512.png`}
                         alt="ProductivityTools Places logo"
                         className="login__logo"
                     />

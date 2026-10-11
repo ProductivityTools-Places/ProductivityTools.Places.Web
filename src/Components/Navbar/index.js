@@ -24,7 +24,7 @@ export default function Navbar() {
                 <Link to="/" className="navbar__brand">
                     <div className="navbar__logo-wrapper">
                         <img
-                            src={`${process.env.PUBLIC_URL}/Places_512.png`}
+                            src={`${process.env.PUBLIC_URL}/icons/icon-512.png`}
                             alt="Places logo"
                             className="navbar__logo"
                         />
